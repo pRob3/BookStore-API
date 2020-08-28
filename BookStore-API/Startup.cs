@@ -71,6 +71,9 @@ namespace BookStore_API
             // NLog
             services.AddSingleton<ILoggerService, LoggerService>();
 
+            //Scoped
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+
 
             // Controllers
             services.AddControllers();
