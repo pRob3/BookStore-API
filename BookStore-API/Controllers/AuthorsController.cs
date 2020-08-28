@@ -34,6 +34,8 @@ namespace BookStore_API.Controllers
         /// </summary>
         /// <returns>List of Authors</returns>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAuthors()
         {
             try
@@ -48,12 +50,49 @@ namespace BookStore_API.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"{e.Message} - {e.InnerException}");
-                return StatusCode(500, "Something went wrong. Please contact the Administration");
+                return InternalError($"{e.Message} - {e.InnerException}");
             }
+                       
+        }
+        /// <summary>
+        /// Get an Author by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An Author's record</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAuthor(int id)
+        {
+            try
+            {
+                _logger.LogInfo($"Attempted Get Author with id: {id} ");
 
+                var author = await _authorRepository.FindById(id);
+                // No author with that id found
+                if(author == null)
+                {
+                    _logger.LogWarn($"Author with id: {id} not found");
+                    return NotFound();
+                }
 
-            
+                var response = _mapper.Map<AuthorDTO>(author);
+
+                _logger.LogInfo($"Successfully got Author with id: {id}");
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                return InternalError($"{e.Message} - {e.InnerException}");
+            }
+        }
+
+        private ObjectResult InternalError(string message)
+        {
+            _logger.LogError(message);
+
+            return StatusCode(500, "Something went wrong. Please contact the Administration");
         }
     }
 }

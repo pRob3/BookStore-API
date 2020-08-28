@@ -4,3 +4,9 @@
 2020-08-28 11:49:59.3554 WARN This is a warning
 2020-08-28 13:53:24.5223 INFO Attempted Get All Authors 
 2020-08-28 13:53:25.8404 ERROR Login failed. The login is from an untrusted domain and cannot be used with Integrated authentication. - 
+2020-08-28 14:27:01.0674 INFO Attempted Get All Authors 
+2020-08-28 14:27:02.2126 ERROR The SELECT permission was denied on the object 'Authors', database 'BookStore', schema 'dbo'. - 
+2020-08-28 14:29:23.9230 INFO Attempted Get All Authors 
+2020-08-28 14:29:24.0746 INFO Successfully got all Authors
+2020-08-28 14:43:15.2408 INFO Attempted Get Author with id: 1 
+2020-08-28 14:43:16.3086 WARN Author with id: 1 not found
