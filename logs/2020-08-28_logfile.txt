@@ -10,3 +10,23 @@
 2020-08-28 14:29:24.0746 INFO Successfully got all Authors
 2020-08-28 14:43:15.2408 INFO Attempted Get Author with id: 1 
 2020-08-28 14:43:16.3086 WARN Author with id: 1 not found
+2020-08-28 15:19:23.1775 WARN Author submission Attempt
+2020-08-28 15:19:23.3086 ERROR Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Object -> Author
+System.Object -> BookStore_API.Data.Author - 
+2020-08-28 15:21:16.1302 WARN Author submission Attempt
+2020-08-28 15:21:17.2442 INFO Author Created
+2020-08-28 15:22:06.4478 WARN Author submission Attempt
+2020-08-28 15:22:06.5201 INFO Author Created
+2020-08-28 17:35:48.1140 INFO Author Update Attempted - id: 1
+2020-08-28 17:35:48.2111 ERROR Missing type map configuration or unsupported mapping.
+
+Mapping types:
+Object -> Author
+System.Object -> BookStore_API.Data.Author - 
+2020-08-28 17:36:43.0992 INFO Author Update Attempted - id: 1
+2020-08-28 17:36:44.1586 WARN Author with id: {id} successfully updated
+2020-08-28 17:38:38.3646 INFO Attempted Get All Authors 
+2020-08-28 17:38:39.2717 INFO Successfully got all Authors
