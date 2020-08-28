@@ -2,3 +2,5 @@
 2020-08-28 11:47:27.0996 DEBUG Got a Value
 2020-08-28 11:48:53.3623 ERROR This is an error!
 2020-08-28 11:49:59.3554 WARN This is a warning
+2020-08-28 13:53:24.5223 INFO Attempted Get All Authors 
+2020-08-28 13:53:25.8404 ERROR Login failed. The login is from an untrusted domain and cannot be used with Integrated authentication. - 
