@@ -73,6 +73,7 @@ namespace BookStore_API
 
             //Scoped
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
 
 
             // Controllers
