@@ -1,3 +1,3 @@
-﻿# BookStore-API
+﻿# BookStore
 
-A small API for a Blazor site Book Store :)
+A small bookstore API and a Blazor Front-end :)
