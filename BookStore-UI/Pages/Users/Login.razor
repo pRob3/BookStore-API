@@ -1,17 +1,12 @@
 ﻿@page "/login"
 
-@using BookStore_UI.Models
-@using BookStore_UI.Contracts
-
 @inject IAuthenticationRepository _authRepo
 @inject NavigationManager _navManager
-
 
 <h3 class="card-title">Login</h3>
 @if (!response)
 {
-    @*<ErrorMessage Message="Something went wrong with the login attempt" />*@
-    <p>ERROR</p>
+    <ErrorMessage Message="Something went wrong with the login attempt" />
 }
 <div class="card-body">
     <EditForm Model="Model" OnValidSubmit="HandleLogin">
@@ -29,10 +24,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Login </button>
-
     </EditForm>
 </div>
-
 
 @code {
     private LoginModel Model = new LoginModel();
