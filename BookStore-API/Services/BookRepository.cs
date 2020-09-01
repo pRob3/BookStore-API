@@ -16,7 +16,6 @@ namespace BookStore_API.Services
         {
             _db = db;
         }
-
         public async Task<bool> Create(Book entity)
         {
             await _db.Books.AddAsync(entity);
@@ -31,16 +30,26 @@ namespace BookStore_API.Services
 
         public async Task<IList<Book>> FindAll()
         {
-            var books = await _db.Books.ToListAsync();
-
+            var books = await _db.Books
+                .Include(q => q.Author)
+                .ToListAsync();
             return books;
         }
 
         public async Task<Book> FindById(int id)
         {
-            var book = await _db.Books.FindAsync(id);
-
+            var book = await _db.Books
+                .Include(q => q.Author)
+                .FirstOrDefaultAsync(q => q.Id == id);
             return book;
+        }
+
+        public async Task<string> GetImageFileName(int id)
+        {
+            var book = await _db.Books
+                .AsNoTracking()
+                .FirstOrDefaultAsync(q => q.Id == id);
+            return book.Image;
         }
 
         public async Task<bool> isExists(int id)

@@ -69,18 +69,25 @@ namespace BookStore_API.Controllers
             var location = GetControllerActionNames();
             try
             {
-                _logger.LogInfo($"{ location }: Attempted Call for id: { id }");
-
+                _logger.LogInfo($"{location}: Attempted Call for id: {id}");
                 var book = await _bookRepository.FindById(id);
-                if(book == null)
+                if (book == null)
                 {
-                    _logger.LogWarn($"{ location }: Failed to retrieve record for id: { id }");
+                    _logger.LogWarn($"{location}: Failed to retrieve record with id: {id}");
                     return NotFound();
                 }
+                var response = _mapper.Map<BookDTO>(book);
+                if (!string.IsNullOrEmpty(response.Image))
+                {
+                    //var imgPath = GetImagePath(book.Image);
+                    //if (System.IO.File.Exists(imgPath))
+                    //{
+                    //    byte[] imgBytes = System.IO.File.ReadAllBytes(imgPath);
+                    //    response.File = Convert.ToBase64String(imgBytes);
+                    //}
+                }
 
-                var response = _mapper.Map<IList<BookDTO>>(book);
-
-                _logger.LogInfo($"{ location }: Successful got record with id: {id}");
+                _logger.LogInfo($"{location}: Successfully got record with id: {id}");
                 return Ok(response);
             }
             catch (Exception e)
