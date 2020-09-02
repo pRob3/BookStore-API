@@ -1,12 +1,14 @@
 ﻿@page "/books/edit/{Id}"
+
 @attribute [Authorize(Roles = "Administrator")]
 
 @inject IBookRepository _repo
 @inject IAuthorRepository _authorRepo
 @inject IFileUpload _fileUpload
 @inject NavigationManager _navManager
+@inject IToastService _toastService
 
-<h3>Edit Book</h3>
+<h3 class="card-title">Edit Book</h3>
 
 @if (int.Parse(Id) < 1 || string.IsNullOrWhiteSpace(Id))
 {
@@ -117,7 +119,7 @@ else
 
                 Model.Image = picName;
             }
-            else if(isFileChanged && file == null)
+            else if (isFileChanged && file == null)
             {
                 // Remove old picture
                 _fileUpload.RemoveFile(Model.Image);
@@ -130,8 +132,12 @@ else
 
             if (isSuccess)
             {
-                //_toastService.ShowSuccess("Book Created Successfully", "");
+                _toastService.ShowSuccess("Book Edited Successfully", "");
                 BackToList();
+            }
+            else
+            {
+                _toastService.ShowError("Something went Wrong with the save");
             }
         }
     }
@@ -151,6 +157,7 @@ else
 
                 var reader = new StreamReader(file.Data);
                 var imageBase64Data = Convert.ToBase64String(msFile.ToArray());
+
                 imageDataURL = string.Format("data:image/png;base64,{0}", imageBase64Data);
                 isInvalidFileType = false;
             }

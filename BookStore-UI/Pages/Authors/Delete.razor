@@ -3,13 +3,9 @@
 
 @inject IAuthorRepository _repo
 @inject NavigationManager _navManager
+@inject IToastService _toastService
 
 <h3 class="card-title">Are You sure You want to delete this record?</h3>
-
-@if (!isSuccess)
-{
-    <ErrorMessage Message="Something Went Wrong With the Operation" />
-}
 
 @if (Model == null)
 {
@@ -85,7 +81,12 @@ else
         isSuccess = await _repo.Delete(Endpoints.AuthorsEndpoint, Model.Id);
         if (isSuccess)
         {
+            _toastService.ShowSuccess("Author Deleted Successfully!", "");
             BackToList();
+        }
+        else
+        {
+            _toastService.ShowError("Something went Wrong with the save");
         }
 
     }

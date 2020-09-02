@@ -11,12 +11,14 @@
 }
 else
 {
-    <AuthorizeView Roles="Administrator">
-        <a href="/books/create" class="btn btn-primary">
-            <span class="oi oi-plus">
-            </span> Create new Book
-        </a>
-    </AuthorizeView>
+<AuthorizeView Roles="Administrator">
+    <a href="/books/create" class="btn btn-primary">
+        <span class="oi oi-plus">
+        </span> Create new Book
+    </a>
+    <hr />
+    <br />
+</AuthorizeView>
 
     @if (Model.Count < 1)
     {
@@ -42,7 +44,7 @@ else
                             <img src="uploads/@book.Image" style="height:50px; width:50px" />
                         </td>
                         <td>@book.Title</td>
-                        <td>@book.Price</td>
+                        <td>@string.Format("{0:C}", book.Price)</td>
                         <td>@book.Author.FirstName @book.Author.LastName</td>
                         <td>
                             <a href="/books/view/@book.Id" class="btn btn-primary"><span class="oi oi-book"></span></a>
