@@ -35,13 +35,11 @@ namespace BookStore_UI
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-
+            services.AddHttpClient();
 
             // Blazored services
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
-
-            services.AddHttpClient();
 
             services.AddScoped<ApiAuthenticationStateProvider>();
             services.AddScoped<AuthenticationStateProvider>(p =>

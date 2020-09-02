@@ -1,0 +1,85 @@
+﻿@page "/authors/edit/{id}"
+@attribute [Authorize(Roles = "Administrator")]
+
+@inject IAuthorRepository _repo
+@inject NavigationManager _navManager
+@inject IToastService _toastService
+
+<h3 class="card-title">Edit Author</h3>
+
+@if (!isSuccess)
+{
+    <ErrorMessage Message="Something Went Wrong With the Operation" />
+}
+
+@if (Model == null)
+{
+    <LoadingMessage Message="Loading Author" />
+}
+else
+{
+    <EditForm Model="Model" OnValidSubmit="EditAuthor">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="firsname">First Name</label>
+            <InputText @bind-Value="Model.FirstName" class="form-control" id="firstname" />
+        </div>
+        <div class="form-group">
+            <label for="lastname">First Name</label>
+            <InputText @bind-Value="Model.LastName" class="form-control" id="lastname" />
+        </div>
+        <div class="form-group">
+            <label for="bio">Biography</label>
+            <InputTextArea @bind-Value="Model.Bio" class="form-control" id="bio" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            <span class="oi oi-pencil"></span>
+            Save Changes
+        </button>
+        <button class="btn btn-outline-secondary" @onclick="BackToList">
+            <span class="oi oi-media-skip-backward"></span>
+            Back to List
+        </button>
+    </EditForm>
+}
+
+
+
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private Author Model = new Author();
+    bool isSuccess = true;
+
+    protected async override Task OnInitializedAsync()
+    {
+        int _id = int.Parse(Id);
+        Model = await _repo.Get(Endpoints.AuthorsEndpoint, _id);
+    }
+
+    private async Task EditAuthor()
+    {
+        isSuccess = await _repo.Update(Endpoints.AuthorsEndpoint, Model, Model.Id);
+
+        if (isSuccess)
+        {
+            _toastService.ShowSuccess("Author Edited Successfully", "");
+            BackToList();
+        }
+        else
+        {
+            _toastService.ShowError("Something went Wrong with the save!", "");
+        }
+
+    }
+
+    private void BackToList()
+    {
+        _navManager.NavigateTo("/authors/");
+    }
+}
