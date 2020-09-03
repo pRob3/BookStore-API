@@ -57,7 +57,7 @@
         </member>
         <member name="M:BookStore_API.Controllers.BooksController.GetBook(System.Int32)">
             <summary>
-            Gets a Book by Id
+            Get's a Book by Id
             </summary>
             <param name="id"></param>
             <returns>A Book Record</returns>

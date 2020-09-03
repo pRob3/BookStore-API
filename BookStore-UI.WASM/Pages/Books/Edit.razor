@@ -1,10 +1,9 @@
 ﻿@page "/books/edit/{Id}"
-
 @attribute [Authorize(Roles = "Administrator")]
+
 
 @inject IBookRepository _repo
 @inject IAuthorRepository _authorRepo
-@inject IFileUpload _fileUpload
 @inject NavigationManager _navManager
 @inject IToastService _toastService
 
@@ -65,7 +64,7 @@ else
             }
             else if (!string.IsNullOrWhiteSpace(Model.Image))
             {
-                <img src="uploads/@Model.Image" style="height:100px;width:100px" />
+                <img src="@string.Format("data:image/png;base64,{0}", Model.File)" style="height:100px;width:100px" />
             }
         </div>
         <button class="btn btn-primary" type="submit">
@@ -111,20 +110,11 @@ else
                 var picId = Guid.NewGuid().ToString().Replace("-", "");
                 var picName = $"{picId}{ext}";
 
-                // Remove old picture
-                _fileUpload.RemoveFile(Model.Image);
-
-                // Upload new Picture
-                _fileUpload.UploadFile(file, msFile, picName);
-
                 Model.Image = picName;
+                Model.File = Convert.ToBase64String(msFile.ToArray());
             }
             else if (isFileChanged && file == null)
             {
-                // Remove old picture
-                _fileUpload.RemoveFile(Model.Image);
-
-                // Remove from ui
                 Model.Image = string.Empty;
             }
 
