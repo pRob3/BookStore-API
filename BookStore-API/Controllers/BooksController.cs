@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,17 +25,31 @@ namespace BookStore_API.Controllers
         private readonly ILoggerService _logger;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
 
-        public BooksController(IBookRepository bookRepository, ILoggerService logger, IMapper mapper, IWebHostEnvironment env)
+        public BooksController(IBookRepository bookRepository, ILoggerService logger, IMapper mapper, IWebHostEnvironment env, IConfiguration config)
         {
             _bookRepository = bookRepository;
             _logger = logger;
             _mapper = mapper;
             _env = env;
+            _config = config;
+
+            // Create book image folder if it don't exists
+            CreateImageFolder();
+        }
+
+        private string CreateImageFolder()
+        {
+            // Create folder
+            System.IO.DirectoryInfo di = System.IO.Directory.
+                CreateDirectory($"{_env.ContentRootPath}{_config.GetValue<string>("UploadFolders:Books")}");
+
+            return di.ToString();
         }
 
         private string GetImagePath(string fileName) 
-            => ($"{_env.ContentRootPath}\\uploads\\{fileName}");
+            => ($"{_env.ContentRootPath}{_config.GetValue<string>("UploadFolders:Books")}{fileName}");
 
 
         /// <summary>
@@ -49,6 +64,7 @@ namespace BookStore_API.Controllers
             var location = GetControllerActionNames();
             try
             {
+
                 _logger.LogInfo($"{ location }: Attempted Call");
 
                 var books = await _bookRepository.FindAll();
