@@ -130,13 +130,16 @@ namespace BookStore_API
 
             app.UseHttpsRedirection();
 
-            // CORS
-            app.UseCors("CorsPolicy");
+
 
             // SeedData Users
             SeedData.Seed(userManager, roleManager).Wait();
 
             app.UseRouting();
+
+            // CORS
+            app.UseCors("CorsPolicy");
+
 
             app.UseAuthentication();
             app.UseAuthorization();

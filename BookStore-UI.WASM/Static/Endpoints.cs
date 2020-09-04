@@ -7,7 +7,7 @@ namespace BookStore_UI.WASM.Static
 {
     public static class Endpoints
     {
-        public static string BaseUrl = "https://localhost:44331/";
+        public static string BaseUrl = "https://bookstore-api.slaf.se/";
         public static string AuthorsEndpoint = $"{BaseUrl}api/authors/";
         public static string BooksEndpoint = $"{BaseUrl}api/books/";
 
